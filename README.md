@@ -5,30 +5,47 @@ A Flask-based CRUD (Create, Read, Update, Delete) web application for managing e
 🚀 Features
 
 ➕ Add new employee records
+
 📋 View all employees
+
 ✏️ Update existing records
+
 ❌ Delete employee entries
+
 🗄️ SQLite database integration
+
 🔄 SQLAlchemy ORM
+
 🌐 Dynamic template rendering with Jinja2
 
 
 🛠️ Tech Stack
 
 Python
+
 Flask
+
 Flask-SQLAlchemy
+
 SQLite
+
 HTML (Jinja Templates)
 
 
 📂 Project Structure
+
 ├── app.py
+
 ├── employee.db
+
 ├── templates/
+
 │   ├── index.html
+
 │   ├── update.html
+
 │   └── about.html
+
 └── static/
 
 
@@ -54,10 +71,15 @@ http://127.0.0.1:5000
 📌 Learning Objectives
 
 Understand Flask routing
+
 Implement CRUD operations
+
 Use SQLAlchemy ORM
+
 Connect Flask with SQLite
+
 Manage form submissions
 
 📜 License
+
 This project is for educational purposes.
