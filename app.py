@@ -50,17 +50,23 @@ def about():
 
 @app.route("/update/<int:sno>", methods=['GET', 'POST'])
 def update(sno):
-    if request.method=='POST':
-        name = request.form['name']
-        email = request.form['email']
-        employee = Employee.query.filter_by(sno=sno).first()
+    employee = Employee.query.filter_by(sno=sno).first()
+
+    if request.method == 'POST':
+        name = request.form.get('name', '').strip()
+        email = request.form.get('email', '').strip()
+
+        if not name or not email:
+            flash("All fields are required", "danger")
+            return redirect(f"/update/{sno}")
+
         employee.name = name
         employee.email = email
-        db.session.add(employee)
-        db.session.commit()
+        db.session.commit()   # no need for db.session.add()
+
+        flash("Employee updated successfully", "success")
         return redirect("/")
 
-    employee = Employee.query.filter_by(sno=sno).first()
     return render_template("update.html", employee=employee)
 
 if __name__ =='__main__':
