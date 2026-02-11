@@ -1,11 +1,12 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, request,redirect
+from flask import Flask, render_template, request,redirect,flash
 
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///employee.db"		# initialising sqlacheemy connectiong it woth my database and creting a database name employee
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['SECRET_KEY'] = 'supersecretkey'
 
 db = SQLAlchemy(app)
 app.app_context().push() #written to create a database
@@ -18,11 +19,19 @@ class Employee(db.Model):						#model here works beacuse flask works on MVC - mo
 @app.route("/",methods=['GET','POST'])
 def home():
     if request.method == 'POST':
-        name=request.form['name']
-        email=request.form['email']
+        name=request.form.get('name','').strip()
+        email=request.form.get('email','').strip()
+
+        if not name or not email:
+            flash("all fields ar required", "danger")
+            return redirect("/") 
         employee = Employee(name = name, email = email)	
         db.session.add(employee)							
         db.session.commit()		
+        
+        flash("form submitted successfully", "Success")
+        return redirect("/")
+
     allemployee=Employee.query.all()
     return render_template("index.html",allemployee=allemployee)
 
